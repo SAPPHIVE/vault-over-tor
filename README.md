@@ -1,4 +1,4 @@
-# <img src="https://www.hashicorp.com/img/vault/vault-logo-color.svg" width="32"> Sapphive Vault-over-Tor
+# <img src="https://icon.icepanel.io/Technology/svg/HashiCorp-Vault.svg" height="32"> Sapphive Vault-over-Tor
 
 ![Project Status](https://img.shields.io/badge/status-initial--scaffolding-blue)
 
@@ -35,10 +35,19 @@ chmod +x init-vault.sh
 *This will give you your **Root Token** and **Unseal Key**. Save them offline!*
 
 ### 4. Get your Onion Address
+Check your logs to find your unique `.onion` URL:
 ```bash
-docker logs vault-tor-gate
+docker logs vault-service
 ```
-Look for the `**************** YOUR ONION ADDRESS ****************` block.
+
+**Expected Output:**
+```text
+***************************************************
+  🚀 SAPPHIVE VAULT-OVER-TOR IS ACTIVE
+  📍 YOUR ONION ADDRESS: v2c3...f4g5.onion
+  🔐 ACCESS YOUR SECRETS SECURELY AT THIS URL
+***************************************************
+```
 
 ---
 

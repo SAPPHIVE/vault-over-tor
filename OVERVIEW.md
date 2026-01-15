@@ -1,4 +1,4 @@
-# <img src="https://www.hashicorp.com/img/vault/vault-logo-color.svg" width="32"> Sapphive Vault-over-Tor
+# <img src="https://icon.icepanel.io/Technology/svg/HashiCorp-Vault.svg" height="32"> Sapphive Vault-over-Tor
 
 ![Docker Pulls](https://img.shields.io/docker/pulls/sapphive/vault-over-tor) ![License](https://img.shields.io/badge/license-MIT-green) ![Security](https://img.shields.io/badge/security-hardened-orange)
 
@@ -9,7 +9,26 @@ By utilizing the **Sapphive Tor Onion Sidecar**, this suite exposes the Vault AP
 
 ---
 
-## 🛡️ Why Vault-over-Tor?
+## �️ What to Expect (Live Output)
+
+When you launch the container, the **Sapphive Entrypoint** automatically establishes your secure circuit and generates your unique fallback identity. You will see this banner in your `docker logs`:
+
+```text
+🧅 Starting Tor to establish Hidden Service circuit...
+⏳ Waiting for .onion address generation...
+
+***************************************************
+  🚀 SAPPHIVE VAULT-OVER-TOR IS ACTIVE
+  📍 YOUR ONION ADDRESS: v2c3...f4g5.onion
+  🔐 ACCESS YOUR SECRETS SECURELY AT THIS URL
+***************************************************
+
+2026-01-16 12:00:00 INFO supervisord started with pid 1
+```
+
+---
+
+## �🛡️ Why Vault-over-Tor?
 
 | Feature | Standard Vault | Vault-over-Tor |
 | :--- | :--- | :--- |

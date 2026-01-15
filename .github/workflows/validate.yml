@@ -27,10 +27,9 @@ jobs:
         run: |
           docker compose up -d
           echo "Waiting for services to initialize..."
-          sleep 10
+          sleep 15
           docker ps
-          docker logs vault-storage
-          docker logs vault-tor-gate
+          docker logs vault-service
 
       - name: Test Local Connectivity
         run: |
