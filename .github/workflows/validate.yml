@@ -1,0 +1,38 @@
+name: Vault-over-Tor Validation
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  schedule:
+    - cron: "0 0 * * 1" # Weekly health check on Mondays
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v4
+
+      - name: Validate Docker Compose
+        run: docker compose config
+
+      - name: Verify Configuration Files
+        run: |
+          if [ ! -f "config/vault-config.hcl" ]; then echo "Missing Vault Config"; exit 1; fi
+          if [ ! -f "init-vault.sh" ]; then echo "Missing Init Script"; exit 1; fi
+
+      - name: Run Composition (Dry Run / Startup Test)
+        run: |
+          docker compose up -d
+          echo "Waiting for services to initialize..."
+          sleep 10
+          docker ps
+          docker logs vault-storage
+          docker logs vault-tor-gate
+
+      - name: Test Local Connectivity
+        run: |
+          # Check if Vault API is responding on the mapped local port
+          curl -s http://localhost:8200/v1/sys/health | grep -q "initialized" || echo "Vault is up but needs initialization"

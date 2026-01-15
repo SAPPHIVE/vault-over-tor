@@ -1,0 +1,14 @@
+services:
+  # Sapphive Vault-over-Tor (Single pullable image)
+  vault-over-tor:
+    build: .
+    image: sapphive/vault-over-tor:latest
+    container_name: vault-service
+    ports:
+      - "${LOCAL_VAULT_PORT:-8200}:8200"
+    volumes:
+      - ./data:/vault/file
+      - ./keys:/var/lib/tor/hidden_service
+    cap_add:
+      - IPC_LOCK
+    restart: always

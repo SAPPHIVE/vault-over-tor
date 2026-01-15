@@ -1,0 +1,52 @@
+# <img src="https://www.hashicorp.com/img/vault/vault-logo-color.svg" width="32"> Sapphive Vault-over-Tor
+
+![Project Status](https://img.shields.io/badge/status-initial--scaffolding-blue)
+
+**Vault-over-Tor** is a privacy-first, zero-trust secrets management solution. It pairs [HashiCorp Vault](https://www.vaultproject.io/) with the [Sapphive Tor Onion Sidecar](https://hub.docker.com/r/sapphive/tor) to provide a secure, globally accessible vault that bypasses firewalls and NAT without exposing any ports to the public internet.
+
+## 🌟 Why this exists?
+Standard Vault deployments require complex VPNs or IP whitelisting for remote access. This project allows you to host your own secrets on a private server (even behind a home router/CGNAT) and access them from anywhere via a 56-character `.onion` address protected by Tor's end-to-end encryption.
+
+## 🚀 Features
+- 🔒 **Zero Public Ports:** No ingress required on your firewall.
+- 🧅 **Onion Routing:** Metadata is hidden from ISPs and network snoopers.
+- 🛡️ **End-to-End Encryption:** Traffic is encrypted by both TLS (optional) and the Tor network.
+- 📦 **Docker Primary:** Spin up a production-ready secret store in seconds.
+
+## 🛠️ Quick Start
+
+### 1. Requirements
+- Docker and Docker Compose installed.
+
+### 2. Launch
+```bash
+docker-compose up -d
+```
+
+### 3. Initialize & Unseal
+Vault starts in a "Sealed" state for security. Use our helper script to initialize it:
+```bash
+# Make script executable
+chmod +x init-vault.sh
+
+# Run initialization
+./init-vault.sh
+```
+*This will give you your **Root Token** and **Unseal Key**. Save them offline!*
+
+### 4. Get your Onion Address
+```bash
+docker logs vault-tor-gate
+```
+Look for the `**************** YOUR ONION ADDRESS ****************` block.
+
+---
+
+## 🏗️ Project Structure
+- `docker-compose.yml`: Orchestrates Vault and the Tor Sidecar.
+- `config/`: Contains Vault security policies and configuration.
+- `data/`: (Volume) Persistent storage for Vault encrypted data.
+- `keys/`: (Volume) Persistent storage for your `.onion` identity keys.
+
+## ⚖️ Legal
+Vault is a trademark of HashiCorp. Tor is a trademark of The Tor Project. This project is maintained by [SAPPHIVE](https://sapphive.com) and is not affiliated with HashiCorp or The Tor Project.

@@ -1,0 +1,14 @@
+# Vault Data
+data/*
+!data/.gitkeep
+
+# Tor Onion Keys
+keys/*
+!keys/.gitkeep
+
+# Environment files
+.env
+
+# System files
+.DS_Store
+Thumbs.db
