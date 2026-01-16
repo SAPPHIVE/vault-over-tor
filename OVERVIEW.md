@@ -40,6 +40,28 @@ When you launch the container, the **Sapphive Entrypoint** automatically establi
 
 ---
 
+## 🛠️ Rapid Deployment (Docker Compose)
+
+Simply add this to your `docker-compose.yml` to get started. By default, it exposes Vault on port **80** of the host for easy access.
+
+```yaml
+services:
+  vault-service:
+    image: sapphive/vault-over-tor:latest
+    container_name: vault-service
+    ports:
+      # Use VAULT_PORT env to change the host port (Default: 80)
+      - "${VAULT_PORT:-80}:8200"
+    volumes:
+      - ./data:/vault/file
+      - ./keys:/var/lib/tor/hidden_service
+    cap_add:
+      - IPC_LOCK
+    restart: always
+```
+
+---
+
 ## 🎯 Professional Use Cases
 
 ### 1. **Multi-Cloud Secret Synchronization**

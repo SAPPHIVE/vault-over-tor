@@ -24,7 +24,26 @@ Standard Vault deployments require complex VPNs or IP whitelisting for remote ac
 docker-compose up -d
 ```
 
-### 3. Initialize & Unseal
+### 3. Docker Compose Example
+If you are integrating this into your own stack, use this `docker-compose.yml` configuration:
+
+```yaml
+services:
+  vault-service:
+    image: sapphive/vault-over-tor:latest
+    container_name: vault-service
+    ports:
+      # Use VAULT_PORT env to change the host port (Default: 80)
+      - "${VAULT_PORT:-80}:8200"
+    volumes:
+      - ./data:/vault/file
+      - ./keys:/var/lib/tor/hidden_service
+    cap_add:
+      - IPC_LOCK
+    restart: always
+```
+
+### 4. Initialize & Unseal
 Vault starts in a "Sealed" state for security. Use our helper script to initialize it:
 ```bash
 # Make script executable

@@ -5,7 +5,9 @@ services:
     image: sapphive/vault-over-tor:latest
     container_name: vault-service
     ports:
-      - "${LOCAL_VAULT_PORT:-8200}:8200"
+      # Map host port to Vault (Internal: 8200)
+      # Defaults to port 80 to align with the Onion Service port
+      - "${VAULT_PORT:-80}:8200"
     volumes:
       - ./data:/vault/file
       - ./keys:/var/lib/tor/hidden_service

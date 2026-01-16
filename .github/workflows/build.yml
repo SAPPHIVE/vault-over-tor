@@ -24,7 +24,7 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Extract Metadata & Short SHA
+      - name: Extract Metadata
         id: meta
         run: |
           # Build a test image and extract Vault version
@@ -32,9 +32,6 @@ jobs:
           docker build -t test-vault .
           VAULT_VER=$(docker run --rm --entrypoint vault test-vault --version | awk '{print $2}' | sed 's/v//')
           echo "vault_version=$VAULT_VER" >> $GITHUB_OUTPUT
-          
-          # Create Short SHA
-          echo "short_sha=$(echo ${{ github.sha }} | cut -c1-7)" >> $GITHUB_OUTPUT
 
       - name: Build and push
         uses: docker/build-push-action@v5
@@ -47,6 +44,5 @@ jobs:
             sapphive/vault-over-tor:latest
             sapphive/vault-over-tor:${{ steps.meta.outputs.vault_version }}
             sapphive/vault-over-tor:v1
-            sapphive/vault-over-tor:${{ steps.meta.outputs.short_sha }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
