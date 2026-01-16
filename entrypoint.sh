@@ -1,11 +1,12 @@
 #!/bin/bash
 
 # Ensure Tor data directory has correct permissions
-# We need to ensure the user running Tor (even if triggered by entrypoint as root)
-# can access these files.
 chown -R tor:tor /var/lib/tor
 chmod 700 /var/lib/tor
 chmod 700 /var/lib/tor/hidden_service
+
+# Process Nginx template
+envsubst < /etc/nginx/templates/nginx.conf.template > /etc/nginx/nginx.conf
 
 # Start Tor in the background as the 'tor' user to generate the onion address
 echo "🧅 Starting Tor to establish Hidden Service circuit..."
@@ -28,8 +29,9 @@ ONION_ADDR=$(cat /var/lib/tor/hidden_service/hostname)
 
 echo "***************************************************"
 echo "  🚀 SAPPHIVE VAULT-OVER-TOR IS ACTIVE"
-echo "  📍 YOUR ONION ADDRESS: $ONION_ADDR"
-echo "  🔐 ACCESS YOUR SECRETS SECURELY AT THIS URL"
+echo "  📍 PUBLIC ONION: http://$ONION_ADDR"
+echo "  🔒 SECURE ONION: https://$ONION_ADDR"
+echo "  🔐 ACCESS YOUR SECRETS SECURELY AT THESE URLS"
 echo "***************************************************"
 
 # Shutdown the background Tor so Supervisor can manage it properly

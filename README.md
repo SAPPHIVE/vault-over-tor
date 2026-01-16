@@ -64,8 +64,9 @@ docker logs vault-service
 ```text
 ***************************************************
   🚀 SAPPHIVE VAULT-OVER-TOR IS ACTIVE
-  📍 YOUR ONION ADDRESS: v2c3...f4g5.onion
-  🔐 ACCESS YOUR SECRETS SECURELY AT THIS URL
+  📍 PUBLIC ONION: http://v2c3...f4g5.onion
+  🔒 SECURE ONION: https://v2c3...f4g5.onion
+  🔐 ACCESS YOUR SECRETS SECURELY AT THESE URLS
 ***************************************************
 ```
 
@@ -77,5 +78,5 @@ docker logs vault-service
 - `data/`: (Volume) Persistent storage for Vault encrypted data.
 - `keys/`: (Volume) Persistent storage for your `.onion` identity keys.
 
-## ⚖️ Legal
+## ⚖️ Legal Disclaimer
 Vault is a trademark of HashiCorp. Tor is a trademark of The Tor Project. This project is maintained by [SAPPHIVE](https://sapphive.com) and is not affiliated with HashiCorp or The Tor Project.
